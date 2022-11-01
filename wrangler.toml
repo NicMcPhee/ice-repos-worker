@@ -1,0 +1,26 @@
+name = "ice-repos"
+type = "rust"
+workers_dev = true
+compatibility_date = "2022-01-20"
+
+kv_namespaces = [
+  { binding = "ice_repos", id = "2ab101a990ed42c596c1051ab2c1983e", preview_id = "cdedd4ece72e4003b309ad81b829a771" }
+]
+
+[vars]
+WORKERS_RS_VERSION = "0.0.9"
+
+[build]
+command = "cargo install -q worker-build && worker-build --release" # required
+
+[build.upload]
+dir = "build/worker"
+format = "modules"
+main = "./shim.mjs"
+
+[[build.upload.rules]]
+globs = ["**/*.wasm"]
+type = "CompiledWasm"
+
+# read more about configuring your Worker via wrangler.toml at:
+# https://developers.cloudflare.com/workers/cli-wrangler/configuration
